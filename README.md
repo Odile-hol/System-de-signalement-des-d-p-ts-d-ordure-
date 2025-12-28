@@ -1,2 +1,10 @@
-# System-de-signalement-des-d-p-ts-d-ordure-
-C'est une application qui permet aux citoyens de signaler les dépôts d'ordure à de permettre à la mairie de vite réagir
+# système de signalement de dépôt d'ordures 
+## Description du projet
+Ce projet vise à concevoir et développer un système de signalement des déchets permettant aux citoyens de déclarer les problèmes liés aux ordures auprès des autorités municipales compétentes.
+
+## Membres de l’équipe
+- Odile  hol : Backend, DevOps, Base de données, Gestion de projet
+- Nicolas : Frontend, Documentation, Rapport LaTeX
+
+## Méthodologie de développement
+Méthodologie Agile Scrum
