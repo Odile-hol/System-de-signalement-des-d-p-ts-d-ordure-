@@ -7,4 +7,8 @@ Ce projet vise à concevoir et développer un système de signalement des déche
 - Nicolas : Frontend, Documentation, Rapport LaTeX
 
 ## Méthodologie de développement
-Méthodologie Agile Scrum
+
+Ce projet suit la méthodologie Agile Scrum pour assurer une livraison incrémentale des fonctionnalités.
+
+**Suivi des tâches :**
+Le tableau de bord des activités est consultable ici : https://trello.com/b/fEAjuKzF/projet-clean-city
