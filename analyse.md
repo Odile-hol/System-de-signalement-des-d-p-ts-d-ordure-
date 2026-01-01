@@ -13,7 +13,8 @@ Cleancity est une application permettant aux citoyens de devenir des acteurs de 
 * **Tableau de Bord Admin :** Visualisation de la liste des déchets signalés et suivi de l'état d'avancement du ramassage.
 * **Notifications :** Confirmation de la prise en compte du signalement pour l'utilisateur.
 
-## 4. Besoins Non-Fonctionnels
-* **Performance :** L'application doit être fluide et permettre un envoi de données rapide même en 3G/4G.
-* **Sécurité :** Intégrité des données de localisation et protection des comptes utilisateurs.
-* **Disponibilité :** Déploiement obligatoire sur un serveur VPS pour une accessibilité 24h/24 (Crucial pour la notation).
+## 4. Besoins Non-Fonctionne
+* **Déploiement VPS :** L'application sera hébergée sur un serveur VPS pour être accessible par l'instructeur lors du test .
+* **Facilité d'utilisation :** L'interface sera épurée pour permettre un signalement en moins de 3 clics.
+* **Stockage :** Utilisation d'une base de données (Firebase ou MySQL) pour stocker les images et les coordonnées de manière persistante.
+ **Adaptabilité :** L'interface doit s'afficher correctement sur différents modèles de smartphones (Responsive design).
