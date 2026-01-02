@@ -23,7 +23,10 @@
 *Objectif : Passer de l'idée au design technique complet.*
 
 - [x] **Tâche 1 :** Analyse détaillée et rédaction de la spécification des besoins (Terminé).
-- [x] [cite_start]**Tâche 2 :** Configuration du dépôt GitHub et du tableau Trello pour le suivi Agile[cite: 18, 27].
-- [ ] [cite_start]**Tâche 3 :** Modélisation UML : Création du diagramme de cas d'utilisation[cite: 46].
-- [ ] [cite_start]**Tâche 4 :** Conception de l'architecture HLD (High-Level Design)[cite: 33, 34].
-- [ ] [cite_start]**Tâche 5 :** Setup du document de rapport sur Overleaf (LaTeX)[cite: 7].
+- [x] [cite_start]**Tâche 2 :** Configuration du dépôt GitHub et du tableau Trello pour le suivi Agile.
+- [ ] [cite_start]**Tâche 3 :** Modélisation UML : Création du diagramme de cas d'utilisation.
+- [ ] [cite_start]**Tâche 4 :** Conception de l'architecture HLD (High-Level Design).
+- [ ] [cite_start]**Tâche 5 :** Setup du document de rapport sur Overleaf (LaTeX).
+
+## 3. Preuve visuelle du Workflow (Trello)
+![Capture du tableau Trello](trello-backlog.png)
