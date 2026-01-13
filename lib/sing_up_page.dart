@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'home_page.dart';
+import 'user_session.dart'; // Importation du Singleton
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -17,11 +18,16 @@ class _SignUpPageState extends State<SignUpPage> {
   bool _isPasswordObscure = true;
   bool _isConfirmObscure = true;
 
+  // AJOUT DES CONTROLEURS POUR LA LOGIQUE
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
   final TextEditingController _confirmPassController = TextEditingController();
 
   @override
   void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
     _passController.dispose();
     _confirmPassController.dispose();
     super.dispose();
@@ -35,15 +41,12 @@ class _SignUpPageState extends State<SignUpPage> {
       backgroundColor: const Color(0xFFF8F9FA),
       body: Stack(
         children: [
-          // 1. FOND (Tout en bas)
           Positioned(
             top: -50,
             right: -size.width * 0.2,
             child: _buildBackgroundShape(
                 size.width * 0.8, const Color(0xFFE0F2F1)),
           ),
-
-          // 2. LE CONTENU (Milieu)
           SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -52,9 +55,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
-                        height:
-                            80), // Augmenté pour ne pas chevaucher le logo/bouton
+                    const SizedBox(height: 80),
                     const Row(
                       children: [
                         Icon(Icons.eco, color: Color(0xFF4CAF50), size: 28),
@@ -76,16 +77,18 @@ class _SignUpPageState extends State<SignUpPage> {
                         style: TextStyle(color: Colors.grey, fontSize: 15)),
                     const SizedBox(height: 30),
 
-                    // --- CHAMPS ---
+                    // --- CHAMPS UTILISANT LES CONTROLEURS ---
                     _buildTextFormField(
                         label: 'Nom Complet',
                         icon: Icons.person_outline,
+                        controller: _nameController, // Ajouté
                         validator: (v) =>
                             (v == null || v.isEmpty) ? "Nom requis" : null),
                     const SizedBox(height: 15),
                     _buildTextFormField(
                         label: 'Email',
                         icon: Icons.email_outlined,
+                        controller: _emailController, // Ajouté
                         validator: (v) => (v == null || !v.contains('@'))
                             ? "Email invalide"
                             : null),
@@ -124,13 +127,26 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     const SizedBox(height: 35),
 
+                    // --- BOUTON SIGN UP AVEC SINGLETON ---
                     SizedBox(
                       width: double.infinity,
                       height: 55,
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            // Action signup
+                            // SAUVEGARDE DANS LE SINGLETON (Exigence Design Pattern)
+                            UserSession.instance.saveUser(
+                              name: _nameController.text,
+                              mail: _emailController.text,
+                              userRole: _selectedRole ?? "Citoyen",
+                            );
+
+                            // Navigation
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HomePage()),
+                            );
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -174,13 +190,10 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ),
           ),
-
-          // 3. BOUTON RETOUR (Tout en haut - placé à la fin de la liste)
           Positioned(
             top: 45,
             left: 20,
             child: Material(
-              // Ajout de Material pour l'effet de clic (splash)
               color: Colors.transparent,
               child: InkWell(
                 onTap: () {
@@ -212,15 +225,17 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  // --- WIDGETS DE DÉCORATION (Inchangés mais inclus pour le code complet) ---
+  // --- WIDGETS DE DÉCORATION (Mis à jour pour accepter le controller) ---
 
   Widget _buildTextFormField(
       {required String label,
       required IconData icon,
+      TextEditingController? controller, // Ajouté
       bool isPassword = false,
       String? Function(String?)? validator}) {
     return _fieldDecoration(
       TextFormField(
+        controller: controller, // Ajouté
         obscureText: isPassword,
         validator: validator,
         decoration: InputDecoration(
