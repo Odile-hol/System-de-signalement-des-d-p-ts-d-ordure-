@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart'; // Importation de votre page d'accueil
+import 'package:cleancity/home_page.dart';
+import 'package:firebase_core/firebase_core.dart'; // Ajout du point-virgule ici ;)
 
-void main() {
+// On ajoute "async" pour permettre d'attendre Firebase
+void main() async {
+  // 1. Cette ligne est OBLIGATOIRE pour Firebase
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // 2. On attend que Firebase s'initialise
+  await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 
@@ -11,10 +19,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Cleancity',
       debugShowCheckedModeBanner: false,
+      title: 'Cleancity',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
       home: const HomePage(),

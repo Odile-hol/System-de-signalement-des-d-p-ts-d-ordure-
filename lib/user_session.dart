@@ -1,24 +1,15 @@
 class UserSession {
-  // Instance unique
-  static final UserSession _instance = UserSession._internal();
-
-  // Données de l'utilisateur
-  String? userName;
-  String? email;
-  String? role;
-  bool isConnected = false;
-
+  static final UserSession instance = UserSession._internal();
   UserSession._internal();
 
-  // Accesseur
-  static UserSession get instance => _instance;
+  String? userName;
+  String? userMail; // <--- Vérifie que cette ligne est bien présente
+  String? userRole;
 
-  // Méthode de sauvegarde
   void saveUser(
       {required String name, required String mail, required String userRole}) {
-    userName = name;
-    email = mail;
-    role = userRole;
-    isConnected = true;
+    this.userName = name;
+    this.userMail = mail; // <--- Et celle-ci aussi
+    this.userRole = userRole;
   }
 }

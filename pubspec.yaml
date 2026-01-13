@@ -1,15 +1,22 @@
-name: cleancity # <--- C'EST CETTE LIGNE QUI MANQUE SUREMENT
+name: cleancity
 description: "A new Flutter project."
 publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.2.0 <4.0.0' # Vérifiez que votre version de SDK est correcte ici
+  sdk: '>=3.10.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
+  image_picker: ^1.2.1
+  geolocator: ^11.1.0
+  flutter_map: ^6.1.0
+  latlong2: ^0.9.1
+  firebase_core: ^3.10.0
+  firebase_auth: ^5.0.0
+  cloud_firestore: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -18,7 +25,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-  # Vos images sont ici
   assets:
     - assets/home.jpg

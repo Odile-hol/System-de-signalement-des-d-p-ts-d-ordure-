@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
-import 'sing_up_page.dart'; // Assurez-vous d'avoir ce fichier pour la navigation
+import 'sing_up_page.dart';
+import 'home_page.dart';
+import 'user_session.dart';
 
-void main() => runApp(const CleanCityApp());
-
-class CleanCityApp extends StatelessWidget {
-  const CleanCityApp({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true),
-      home: const LoginPage(),
-    );
-  }
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passController = TextEditingController();
+  bool _isObscure = true;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,30 +50,28 @@ class LoginPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // --- BOUTON RETOUR ---
+                  const SizedBox(height: 10),
+                  IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.arrow_back_ios_new_rounded,
+                        color: Colors.black87),
+                  ),
+
                   const SizedBox(height: 20),
 
-                  // --- HEADER (LOGO + MENU) ---
+                  // --- LOGO ---
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          const Icon(Icons.eco,
-                              color: Color(0xFF4CAF50), size: 28),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Cleancity',
-                            style: TextStyle(
-                              color: Colors.blueGrey[900],
-                              fontWeight: FontWeight.bold,
-                              fontSize: 22,
-                            ),
-                          ),
-                        ],
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.menu, size: 30),
-                        onPressed: () {},
+                      const Icon(Icons.eco, color: Color(0xFF4CAF50), size: 28),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Cleancity',
+                        style: TextStyle(
+                          color: Colors.blueGrey[900],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
                       ),
                     ],
                   ),
@@ -99,27 +100,27 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(height: 50),
 
                   // --- FORMULAIRE ---
-                  _buildTextField(label: 'Email'),
+                  _buildTextField(
+                    label: 'Email',
+                    controller: _emailController,
+                  ),
                   const SizedBox(height: 20),
                   _buildTextField(
                     label: 'Password',
-                    isPassword: true,
-                    suffixIcon: Icons.visibility_off_outlined,
+                    isPassword: _isObscure,
+                    controller: _passController,
+                    suffixIcon: _isObscure
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    onSuffixTap: () {
+                      setState(() {
+                        _isObscure = !_isObscure;
+                      });
+                    },
                   ),
 
-                  const SizedBox(height: 15),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Forgot Password?',
-                        style: TextStyle(color: Color(0xFF42A5F5)),
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 30),
+                  // L'espace "Forgot Password" a été supprimé ici
+                  const SizedBox(height: 40),
 
                   // --- BOUTON LOGIN ---
                   SizedBox(
@@ -127,7 +128,24 @@ class LoginPage extends StatelessWidget {
                     height: 55,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Logique de connexion ici
+                        if (_emailController.text.isNotEmpty) {
+                          UserSession.instance.saveUser(
+                            name: "Utilisateur",
+                            mail: _emailController.text,
+                            userRole: "Citoyen",
+                          );
+
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomePage()),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Veuillez entrer votre email")),
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF4CAF50),
@@ -148,7 +166,7 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 60), // Espace avant le footer
+                  const SizedBox(height: 60),
 
                   // --- FOOTER (SIGN UP) ---
                   Center(
@@ -188,7 +206,6 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  // Widget pour les formes floues en fond
   Widget _buildBackgroundShape(double size, Color color) {
     return Container(
       width: size,
@@ -200,9 +217,13 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  // Widget pour les champs de texte stylisés
-  Widget _buildTextField(
-      {required String label, bool isPassword = false, IconData? suffixIcon}) {
+  Widget _buildTextField({
+    required String label,
+    bool isPassword = false,
+    IconData? suffixIcon,
+    TextEditingController? controller,
+    VoidCallback? onSuffixTap,
+  }) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -216,6 +237,7 @@ class LoginPage extends StatelessWidget {
         ],
       ),
       child: TextField(
+        controller: controller,
         obscureText: isPassword,
         decoration: InputDecoration(
           hintText: label,
@@ -224,7 +246,10 @@ class LoginPage extends StatelessWidget {
               const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
           border: InputBorder.none,
           suffixIcon: suffixIcon != null
-              ? Icon(suffixIcon, color: Colors.grey[400])
+              ? IconButton(
+                  icon: Icon(suffixIcon, color: Colors.grey[400]),
+                  onPressed: onSuffixTap,
+                )
               : null,
         ),
       ),

@@ -1,3 +1,9 @@
+plugins {
+    // Cette ligne permet de dire au projet où télécharger les outils Google
+    id("com.google.gms.google-services") version "4.4.0" apply false
+}
+
+
 allprojects {
     repositories {
         google()
