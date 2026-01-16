@@ -16,7 +16,7 @@ Actuellement, le suivi des dépôts d'ordures illégaux repose sur des méthodes
 * **Product & Sprint Backlog :** Consultable dans le fichier `backlog.md`.
 * [cite_start]**Suivi des tâches :** Nous utilisons un tableau Trello pour gérer le workflow (To Do, In Progress, Review, Done) .
 
-🔗 **Lien du tableau Trello :** [Projet Clean City](https://trello.com/b/fEAjuKzF/projet-clean-city)
+🔗 **Lien du tableau Trello :** [Projet Clean City] https://trello.com/b/fEAjuKzF/projet-clean-city
 
 ## 🏗️ Architecture & Design
 [cite_start]Ce projet met l'accent sur la conception logicielle rigoureuse (LLD & HLD):
